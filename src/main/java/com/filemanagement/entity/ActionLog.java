@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 import com.filemanagement.model.Action;
+import com.filemanagement.model.ModuleName;
 import com.filemanagement.utils.DateUtils;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -33,6 +34,10 @@ public class ActionLog extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(length = 30)
     private Action action;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 30)
+    private ModuleName moduleName;
 
     private String userName;
 

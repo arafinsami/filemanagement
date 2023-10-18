@@ -33,6 +33,9 @@ public class AppUser extends BaseEntity {
     @Column(name = "USER_NAME")
     private String username;
 
+    @Column(name = "USER_EMAIL")
+    private String email;
+
     @JsonIgnore
     @Column(name = "PASSWORD")
     private String password;

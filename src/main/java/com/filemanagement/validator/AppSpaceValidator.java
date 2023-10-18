@@ -1,9 +1,10 @@
 package com.filemanagement.validator;
 
+import com.filemanagement.dto.AppItemDto;
 import com.filemanagement.dto.AppUserDto;
-import com.filemanagement.entity.AppUser;
+import com.filemanagement.entity.AppItem;
 import com.filemanagement.exception.ResourceNotFoundException;
-import com.filemanagement.service.AppUserService;
+import com.filemanagement.service.AppItemService;
 import com.filemanagement.utils.ValidatorConstants;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +20,10 @@ import static com.filemanagement.utils.StringUtils.isNotEmpty;
 
 @Component
 @RequiredArgsConstructor
-public class AppUserValidator implements Validator {
+public class AppSpaceValidator implements Validator {
 
     @Resource
-    private AppUserService service;
+    private AppItemService service;
 
     @Override
     public boolean supports(@NonNull Class<?> clazz) {
@@ -31,21 +32,21 @@ public class AppUserValidator implements Validator {
 
     @Override
     public void validate(@NonNull Object target, @NonNull Errors error) {
-        AppUserDto dto = (AppUserDto) target;
+        AppItemDto dto = (AppItemDto) target;
 
         if (Objects.isNull(dto.getId())) {
-            Optional<AppUser> username = service.findByUsername(dto.getUsername());
-            if (username.isPresent()) {
-                error.rejectValue("username", null, ValidatorConstants.ALREADY_EXIST);
+            Optional<AppItem> name = service.findByName(dto.getName());
+            if (name.isPresent()) {
+                error.rejectValue("name", null, ValidatorConstants.ALREADY_EXIST);
             }
         }
 
         if (isNotEmpty(dto.getId())) {
-            AppUser appUser = service.findById(dto.getId()).orElseThrow(ResourceNotFoundException::new);
-            if (!appUser.getUsername().equals(dto.getUsername())) {
-                Optional<AppUser> appUserName = service.findByUsername(dto.getUsername());
-                if (appUserName.isPresent()) {
-                    error.rejectValue("username", null, ValidatorConstants.ALREADY_EXIST);
+            AppItem appItem = service.findById(dto.getId()).orElseThrow(ResourceNotFoundException::new);
+            if (!appItem.getName().equals(dto.getName())) {
+                Optional<AppItem> appItemName = service.findByName(dto.getName());
+                if (appItemName.isPresent()) {
+                    error.rejectValue("name", null, ValidatorConstants.ALREADY_EXIST);
                 }
             }
         }

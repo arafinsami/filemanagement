@@ -8,14 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PermissionDetailsDto {
 
-    private String authority;
-
-    private String authorityName;
+    private String permissionLevel;
 
     public static PermissionDetailsDto from(Permission permission) {
         PermissionDetailsDto dto = new PermissionDetailsDto();
-        dto.setAuthority(permission.getAuthority());
-        dto.setAuthorityName(permission.getAuthorityName());
+        dto.setPermissionLevel(permission.getPermissionLevel());
         return dto;
     }
 }

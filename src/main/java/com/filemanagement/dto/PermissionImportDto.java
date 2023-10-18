@@ -13,16 +13,12 @@ public class PermissionImportDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ExcelCellName("Authority")
-    private String authority;
-
-    @ExcelCellName("Authority Name")
-    private String authorityName;
+    @ExcelCellName("Permission Level")
+    private String permissionLevel;
 
     public Permission toImportData() {
         Permission permission = new Permission();
-        permission.setAuthority(authority);
-        permission.setAuthorityName(authorityName);
+        permission.setPermissionLevel(permissionLevel);
         return permission;
     }
 }

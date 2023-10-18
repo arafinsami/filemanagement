@@ -33,7 +33,7 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping(path = "user")
 @Tag(name = "user api")
 @RequiredArgsConstructor
 public class AppUserController {
@@ -74,7 +74,7 @@ public class AppUserController {
         AppUser appUser = appUserService.update(request);
         return ok(success(AppUserDto.from(appUser)).getJson());
     }
-    
+
     @GetMapping("/list")
     @PreAuthorize("hasAuthority('READ_USER')")
     @Operation(summary = "show lists of users", description = "lists of users")

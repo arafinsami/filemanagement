@@ -19,7 +19,7 @@ public class AuthUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser user = appUserRepository.findByUsername(username);
+        AppUser user = appUserRepository.findByUsername(username).orElseThrow();
         if (Objects.isNull(user)) {
             return null;
         }

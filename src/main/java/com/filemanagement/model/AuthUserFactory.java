@@ -39,7 +39,7 @@ public final class AuthUserFactory {
         Set<String> privileges = new HashSet<>();
         Set<Permission> permissions = new HashSet<>();
         groups.forEach(group -> permissions.addAll(group.getPermissions()));
-        permissions.forEach(permission -> privileges.add(permission.getAuthority()));
+        permissions.forEach(permission -> privileges.add(permission.getPermissionLevel()));
         return privileges;
     }
 

@@ -25,9 +25,6 @@ public class Permission extends BaseEntity {
     @Column(name = "PERMISSION_ID")
     private Long id;
 
-    @Column(name = "AUTHORITY")
-    private String authority;
-
-    @Column(name = "AUTHORITY_NAME")
-    private String authorityName;
+    @Column(name = "PERMISSION_LEVEL")
+    private String permissionLevel;
 }

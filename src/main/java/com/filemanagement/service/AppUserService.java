@@ -22,6 +22,7 @@ import java.util.Optional;
 
 import static com.filemanagement.model.Action.SAVE;
 import static com.filemanagement.model.Action.UPDATE;
+import static com.filemanagement.model.ModuleName.USER;
 import static com.filemanagement.utils.StringUtils.objectToJson;
 
 @Service
@@ -41,24 +42,16 @@ public class AppUserService {
         appUserHelper.getSaveData(appUser);
         AppUser saveAppuser = appUserRepository.save(appUser);
         AppUserDto audit = AppUserDto.from(saveAppuser);
-        actionLogService.publishActivity(
-                SAVE,
-                String.valueOf(audit.getId()),
-                objectToJson(audit)
-        );
+        actionLogService.publishActivity(SAVE, USER, String.valueOf(audit.getId()), objectToJson(audit));
         return saveAppuser;
     }
 
     @Transactional
-    public AppUser update(AppUser bank) {
-        appUserHelper.getUpdateData(bank, RecordStatus.ACTIVE);
-        AppUser au = appUserRepository.save(bank);
+    public AppUser update(AppUser appUser) {
+        appUserHelper.getUpdateData(appUser, RecordStatus.ACTIVE);
+        AppUser au = appUserRepository.save(appUser);
         AppUserDto audit = AppUserDto.from(au);
-        actionLogService.publishActivity(
-                UPDATE,
-                String.valueOf(audit.getId()),
-                objectToJson(audit)
-        );
+        actionLogService.publishActivity(UPDATE, USER, String.valueOf(audit.getId()), objectToJson(audit));
         return au;
     }
 
@@ -68,18 +61,11 @@ public class AppUserService {
         CriteriaQuery<AppUser> query = criteriaBuilder.createQuery(AppUser.class);
         Root<AppUser> root = query.from(AppUser.class);
         query.select(root);
-        TypedQuery<AppUser> tQuery = entityManager.createQuery(query)
-                .setFirstResult(page * size)
-                .setMaxResults(size);
+        TypedQuery<AppUser> tQuery = entityManager.createQuery(query).setFirstResult(page * size).setMaxResults(size);
         List<AppUser> result = tQuery.getResultList();
         Long total = (long) result.size();
         PaginationParameters.getData(maps, page, total, size, result);
         return maps;
-    }
-
-    @Transactional(readOnly = true)
-    public List<AppUser> finaAll() {
-        return appUserRepository.findAll();
     }
 
     public Optional<AppUser> findByUsername(String username) {

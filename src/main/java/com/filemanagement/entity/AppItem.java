@@ -8,7 +8,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serial;
-import java.io.Serializable;
 
 @Data
 @Entity
@@ -31,4 +30,8 @@ public class AppItem extends BaseEntity {
 
     @Column(name = "ITEM_TYPE")
     private String type;
+
+    @ManyToOne
+    @JoinColumn(name = "GROUP_ID", nullable = false)
+    private Group group;
 }

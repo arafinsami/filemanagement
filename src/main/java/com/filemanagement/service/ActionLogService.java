@@ -2,6 +2,7 @@ package com.filemanagement.service;
 
 import com.filemanagement.entity.ActionLog;
 import com.filemanagement.model.Action;
+import com.filemanagement.model.ModuleName;
 import com.filemanagement.repository.ActionLogRepository;
 import com.filemanagement.utils.WebUtils;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +19,10 @@ public class ActionLogService {
     private final ActionLogRepository actionLogRepository;
 
     @Transactional
-    public void publishActivity(Action action, String documentId, String comments) {
+    public void publishActivity(Action action, ModuleName moduleName, String documentId, String comments) {
         ActionLog actionLog = new ActionLog();
         actionLog.setAction(action);
+        actionLog.setModuleName(moduleName);
         actionLog.setDocumentId(documentId);
         actionLog.setComments(comments);
         actionLog.setIpAddress(WebUtils.getCurrentRequest().getRemoteAddr());

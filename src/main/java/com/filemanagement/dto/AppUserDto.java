@@ -21,7 +21,7 @@ public class AppUserDto {
 
     private String lastName;
 
-    private String password;
+    private String email;
 
     private Set<Group> groups;
 
@@ -33,6 +33,7 @@ public class AppUserDto {
         dto.setUsername(user.getUsername());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
+        dto.setEmail(user.getEmail());
         dto.setGroups(getGroupsByUser(user));
         dto.setPermissions(getPermissionsByGroups(user));
         return dto;
@@ -56,6 +57,7 @@ public class AppUserDto {
         user.setUsername(username);
         user.setFirstName(firstName);
         user.setLastName(lastName);
+        user.setEmail(email);
         return user;
     }
 
@@ -63,5 +65,6 @@ public class AppUserDto {
         user.setUsername(username);
         user.setFirstName(firstName);
         user.setLastName(lastName);
+        user.setEmail(email);
     }
 }
