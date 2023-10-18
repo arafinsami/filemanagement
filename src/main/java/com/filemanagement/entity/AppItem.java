@@ -2,6 +2,7 @@ package com.filemanagement.entity;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -15,6 +16,7 @@ import java.io.Serial;
 @DynamicUpdate
 @NoArgsConstructor
 @Table(name = "APP_ITEM")
+@EqualsAndHashCode(callSuper = false)
 public class AppItem extends BaseEntity {
 
     @Serial

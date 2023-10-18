@@ -4,6 +4,7 @@ import com.filemanagement.model.Action;
 import com.filemanagement.model.ModuleName;
 import com.filemanagement.utils.DateUtils;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -17,6 +18,7 @@ import java.util.Date;
 @DynamicUpdate
 @NoArgsConstructor
 @Table(name = "ACTION_LOGS")
+@EqualsAndHashCode(callSuper = false)
 public class ActionLog extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
