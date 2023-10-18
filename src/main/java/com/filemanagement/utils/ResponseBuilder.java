@@ -17,6 +17,8 @@ public class ResponseBuilder implements Response {
 
     private Object errors = null;
 
+    private String message = null;
+
     public ResponseBuilder(ResponseType type) {
         this.type = type;
     }

@@ -16,7 +16,7 @@ import java.io.Serializable;
 @DynamicUpdate
 @NoArgsConstructor
 @Table(name = "APP_FILES")
-public class AppFiles implements Serializable {
+public class AppFiles extends BaseEntity {
 
     @Serial
     private static final long serialVersionUID = 1L;

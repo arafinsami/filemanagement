@@ -6,6 +6,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 
 @Data
@@ -14,8 +15,9 @@ import java.io.Serializable;
 @DynamicUpdate
 @NoArgsConstructor
 @Table(name = "APP_PERMISSION")
-public class Permission implements Serializable {
+public class Permission extends BaseEntity {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

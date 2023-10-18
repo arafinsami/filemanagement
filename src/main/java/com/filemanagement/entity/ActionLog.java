@@ -19,7 +19,7 @@ import lombok.Data;
 @DynamicUpdate
 @NoArgsConstructor
 @Table(name = "ACTION_LOGS")
-public class ActionLog implements Serializable {
+public class ActionLog extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
-public class UserDto {
+public class AppUserDto {
 
     private Long id;
 
@@ -27,8 +27,8 @@ public class UserDto {
 
     private Set<Permission> permissions;
 
-    public static UserDto from(AppUser user) {
-        UserDto dto = new UserDto();
+    public static AppUserDto from(AppUser user) {
+        AppUserDto dto = new AppUserDto();
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
         dto.setFirstName(user.getFirstName());

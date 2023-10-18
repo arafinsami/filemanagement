@@ -1,5 +1,6 @@
 package com.filemanagement.utils;
 
+import com.google.gson.Gson;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.Arrays;
@@ -60,6 +61,10 @@ public class StringUtils {
             }
         }
         return isHtml;
+    }
+
+    public static String objectToJson(Object obj) {
+        return new Gson().toJson(obj);
     }
 
 }

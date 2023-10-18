@@ -2,6 +2,7 @@ package com.filemanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -18,7 +19,8 @@ import java.util.Set;
 @DynamicUpdate
 @NoArgsConstructor
 @Table(name = "APP_USER")
-public class AppUser implements Serializable {
+@EqualsAndHashCode(callSuper = false)
+public class AppUser extends BaseEntity {
 
     @Serial
     private static final long serialVersionUID = 1L;

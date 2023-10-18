@@ -15,7 +15,7 @@ import java.util.Set;
 @DynamicUpdate
 @NoArgsConstructor
 @Table(name = "APP_GROUP")
-public class Group implements Serializable {
+public class Group extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
