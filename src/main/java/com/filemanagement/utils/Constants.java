@@ -26,6 +26,9 @@ public final class Constants {
             "/webjars/**"
     };
 
+    public static final String CLAIM_KEY_USERNAME = "sub";
+    public static final String CLAIM_KEY_CREATED = "created";
+
     private Constants() {
     }
 }

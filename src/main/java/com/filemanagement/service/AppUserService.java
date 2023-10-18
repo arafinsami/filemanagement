@@ -16,6 +16,7 @@ import static java.lang.String.valueOf;
 public class AppUserService {
 
     private final ActionLogService actionLogService;
+
     private final AppUserRepository appUserRepository;
 
     @Transactional
