@@ -2,7 +2,7 @@ package com.filemanagement.service;
 
 import com.filemanagement.dto.AppItemDto;
 import com.filemanagement.entity.AppItem;
-import com.filemanagement.helper.AppSpaceHelper;
+import com.filemanagement.helper.AppItemHelper;
 import com.filemanagement.model.RecordStatus;
 import com.filemanagement.repository.AppItemRepository;
 import com.filemanagement.utils.FileUtils;
@@ -25,25 +25,34 @@ public class AppItemService extends FileUtils {
 
     private final AppItemRepository appItemRepository;
 
-    private final AppSpaceHelper appSpaceHelper;
+    private final AppItemHelper appItemHelper;
 
     @Transactional
     public AppItem save(AppItem appItem) {
         createSpace(appItem.getName());
-        appSpaceHelper.getSaveData(appItem);
+        appItemHelper.getSaveData(appItem);
         AppItem saveItem = appItemRepository.save(appItem);
         AppItemDto audit = AppItemDto.from(saveItem);
-        actionLogService.publishActivity(SAVE, SPACE, String.valueOf(audit.getId()), objectToJson(audit));
+        actionLogService.publishActivity(
+                SAVE,
+                SPACE,
+                String.valueOf(audit.getId()),
+                objectToJson(audit)
+        );
         return saveItem;
     }
 
     @Transactional
     public AppItem update(AppItem appItem, String newFolderName) {
         updateSpace(appItem.getName(), newFolderName);
-        appSpaceHelper.getUpdateData(appItem, RecordStatus.ACTIVE);
+        appItemHelper.getUpdateData(appItem, RecordStatus.ACTIVE);
         AppItem au = appItemRepository.save(appItem);
         AppItemDto audit = AppItemDto.from(au);
-        actionLogService.publishActivity(UPDATE, SPACE, String.valueOf(audit.getId()), objectToJson(audit));
+        actionLogService.publishActivity(UPDATE,
+                SPACE,
+                String.valueOf(audit.getId()),
+                objectToJson(audit)
+        );
         return au;
     }
 

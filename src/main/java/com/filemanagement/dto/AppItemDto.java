@@ -24,10 +24,10 @@ public class AppItemDto {
     }
 
     public AppItem to() {
-        AppItem user = new AppItem();
-        user.setName(name);
-        user.setType(type);
-        return user;
+        AppItem appItem = new AppItem();
+        appItem.setName(name);
+        appItem.setType(type);
+        return appItem;
     }
 
     public void update(AppItem appItem) {

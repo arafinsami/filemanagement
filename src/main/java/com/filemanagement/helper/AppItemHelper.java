@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class AppSpaceHelper {
+public class AppItemHelper {
 
     @Resource
     private ActiveUserContext context;

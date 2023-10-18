@@ -42,7 +42,12 @@ public class AppUserService {
         appUserHelper.getSaveData(appUser);
         AppUser saveAppuser = appUserRepository.save(appUser);
         AppUserDto audit = AppUserDto.from(saveAppuser);
-        actionLogService.publishActivity(SAVE, USER, String.valueOf(audit.getId()), objectToJson(audit));
+        actionLogService.publishActivity(
+                SAVE,
+                USER,
+                String.valueOf(audit.getId()),
+                objectToJson(audit)
+        );
         return saveAppuser;
     }
 
@@ -51,7 +56,12 @@ public class AppUserService {
         appUserHelper.getUpdateData(appUser, RecordStatus.ACTIVE);
         AppUser au = appUserRepository.save(appUser);
         AppUserDto audit = AppUserDto.from(au);
-        actionLogService.publishActivity(UPDATE, USER, String.valueOf(audit.getId()), objectToJson(audit));
+        actionLogService.publishActivity(
+                UPDATE,
+                USER,
+                String.valueOf(audit.getId()),
+                objectToJson(audit)
+        );
         return au;
     }
 

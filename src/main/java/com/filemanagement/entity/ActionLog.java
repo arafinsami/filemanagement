@@ -1,18 +1,15 @@
 package com.filemanagement.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.*;
-
 import com.filemanagement.model.Action;
 import com.filemanagement.model.ModuleName;
 import com.filemanagement.utils.DateUtils;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import lombok.Data;
+import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity

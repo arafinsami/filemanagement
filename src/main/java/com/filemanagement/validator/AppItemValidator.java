@@ -20,7 +20,7 @@ import static com.filemanagement.utils.StringUtils.isNotEmpty;
 
 @Component
 @RequiredArgsConstructor
-public class AppSpaceValidator implements Validator {
+public class AppItemValidator implements Validator {
 
     @Resource
     private AppItemService service;

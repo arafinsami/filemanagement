@@ -5,7 +5,7 @@ import com.filemanagement.dto.AppItemDto;
 import com.filemanagement.entity.AppItem;
 import com.filemanagement.exception.ResourceNotFoundException;
 import com.filemanagement.service.AppItemService;
-import com.filemanagement.validator.AppSpaceValidator;
+import com.filemanagement.validator.AppItemValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,11 +33,11 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping(path = "space")
 @Tag(name = "space api")
 @RequiredArgsConstructor
-public class SpaceController {
+public class AppItemController {
 
     private final AppItemService appItemService;
 
-    private final AppSpaceValidator appSpaceValidator;
+    private final AppItemValidator appItemValidator;
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('CREATE_SPACE')")
@@ -47,7 +47,7 @@ public class SpaceController {
     })
     public ResponseEntity<JSONObject> save(@Valid @RequestBody AppItemDto dto,
                                            BindingResult bindingResult) {
-        ValidationUtils.invokeValidator(appSpaceValidator, dto, bindingResult);
+        ValidationUtils.invokeValidator(appItemValidator, dto, bindingResult);
         if (bindingResult.hasErrors()) {
             return badRequest().body(error(fieldError(bindingResult)).getJson());
         }
@@ -64,7 +64,7 @@ public class SpaceController {
     @Operation(summary = "updating a space", description = "updating a updating")
     public ResponseEntity<JSONObject> update(@Valid @RequestBody AppItemDto dto,
                                              BindingResult bindingResult) {
-        ValidationUtils.invokeValidator(appSpaceValidator, dto, bindingResult);
+        ValidationUtils.invokeValidator(appItemValidator, dto, bindingResult);
         if (bindingResult.hasErrors()) {
             return badRequest().body(error(fieldError(bindingResult)).getJson());
         }

@@ -4,11 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 
 @Slf4j
 public abstract class FileUtils {
@@ -42,22 +39,6 @@ public abstract class FileUtils {
             }
         } else {
             logger.info("Folder not found.");
-        }
-    }
-
-    protected void upload(MultipartFile file, String filepath) {
-        String name = file.getOriginalFilename();
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-                File dir = new File(filepath);
-                File serverFile = new File(dir + File.separator + name);
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                stream.write(bytes);
-                stream.close();
-            } catch (Exception e) {
-                logger.error("file uploading failed !!!!");
-            }
         }
     }
 }
