@@ -28,6 +28,7 @@ public final class Constants {
 
     public static final String CLAIM_KEY_USERNAME = "sub";
     public static final String CLAIM_KEY_CREATED = "created";
+    public static final String RESOURCE_NOT_FOUND = "resource not found";
 
     private Constants() {
     }

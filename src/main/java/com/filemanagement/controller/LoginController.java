@@ -5,6 +5,7 @@ import com.filemanagement.dto.UserDetailsDto;
 import com.filemanagement.entity.AppUser;
 import com.filemanagement.entity.Group;
 import com.filemanagement.entity.Permission;
+import com.filemanagement.exception.ResourceNotFoundException;
 import com.filemanagement.model.Login;
 import com.filemanagement.repository.AppUserRepository;
 import com.filemanagement.security.TokenProvider;
@@ -55,7 +56,9 @@ public class LoginController {
         final String accessToken = jwtProvider.generateToken(userDetails);
         final String refreshToken = jwtProvider.generateRefreshToken(userDetails);
         Set<String> groupStr = new HashSet<>();
-        AppUser appUser = appUserRepository.findByUsername(login.getUsername());
+        AppUser appUser = appUserRepository.findByUsername(login.getUsername()).orElseThrow(
+                () -> new ResourceNotFoundException("user not found  with username: " + login.getUsername())
+        );
         List<Permission> permissions = new ArrayList<>();
         Set<Group> groups = appUser.getGroups();
         groups.forEach(group -> groupStr.add(group.getName()));
