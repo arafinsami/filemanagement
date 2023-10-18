@@ -1,0 +1,45 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.7'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.filemanagement'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.10.RELEASE'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	implementation 'org.apache.poi:poi:3.17'
+	implementation 'com.github.ozlerhakan:poiji:1.11'
+	implementation 'net.sf.json-lib:json-lib:2.4:jdk15'
+	implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.7'
+	implementation 'org.springdoc:springdoc-openapi-data-rest:1.6.7'
+	implementation 'com.auth0:java-jwt:3.19.1'
+	implementation 'org.modelmapper:modelmapper:3.1.0'
+	runtimeOnly 'org.postgresql:postgresql'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+}
