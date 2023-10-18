@@ -1,0 +1,3 @@
+1. permission.xlsx file is inside resource-->date folder. First import the permission file using permission API. 
+2. After that execute setup API. http://localhost:8000/setup
+3. Go to swagger as http://localhost:8000/swagger-ui/index.html and Hit login api with username and password as : admin and admin. Once you get the token, at the bottom left corner see Authorize, here paste the token and start browsing API's.
