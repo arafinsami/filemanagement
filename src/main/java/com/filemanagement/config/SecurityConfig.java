@@ -2,6 +2,7 @@ package com.filemanagement.config;
 
 import com.filemanagement.security.CustomAuthenticationEntryPoint;
 import com.filemanagement.security.CustomAuthenticationTokenFilter;
+import com.filemanagement.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -26,30 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
 
-    private static final String[] PUBLIC_MATECHERS = {
-            "/setup",
-            "/login",
-            "/permission-data-upload",
-            "/promis-indicator/**",
-            "/reset/**",
-            "/v2/api-docs",
-            "/configuration/ui",
-            "/swagger-resources/**",
-            "/configuration/security/**",
-            "/swagger-ui.html",
-            "/webjars/**",
-            "/actuator/info",
-    };
-    private static final String[] SWAGGER_MATECHERS = {
-            "/v3/api-docs/**",
-            "/configuration/ui",
-            "/swagger-resources/**",
-            "/configuration/security/**",
-            "/swagger-ui.html",
-            "/swagger-ui/*",
-            "/webjars/**"
-    };
     private final CustomAuthenticationEntryPoint unauthorizedHandler;
+
     private final UserDetailsService userDetailsService;
 
     @Bean
@@ -66,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public CustomAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+    public CustomAuthenticationTokenFilter authenticationTokenFilterBean() {
         return new CustomAuthenticationTokenFilter();
     }
 
@@ -81,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(PUBLIC_MATECHERS)
+                .antMatchers(Constants.PUBLIC_MATECHERS)
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -92,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(SWAGGER_MATECHERS);
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers(Constants.SWAGGER_MATECHERS);
     }
 }
