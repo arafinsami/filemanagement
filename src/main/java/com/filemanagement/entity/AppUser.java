@@ -1,9 +1,7 @@
 package com.filemanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -17,7 +15,9 @@ import java.util.Set;
 @DynamicInsert
 @DynamicUpdate
 @NoArgsConstructor
+@Builder(toBuilder = true)
 @Table(name = "APP_USER")
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = false)
 public class AppUser extends BaseEntity {
 

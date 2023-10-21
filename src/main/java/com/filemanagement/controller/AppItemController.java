@@ -39,7 +39,7 @@ public class AppItemController {
 
     private final AppItemValidator appItemValidator;
 
-    @PostMapping("/save")
+    @PostMapping
     @PreAuthorize("hasAuthority('CREATE_SPACE')")
     @Operation(summary = "creating a space", description = "creating a space")
     @ApiResponse(responseCode = "200", content = {
@@ -56,7 +56,7 @@ public class AppItemController {
         return ok(success(AppItemDto.from(appItem)).getJson());
     }
 
-    @PutMapping("/update")
+    @PutMapping
     @PreAuthorize("hasAuthority('UPDATE_SPACE')")
     @ApiResponse(responseCode = "200", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = AppItemDto.class))
@@ -74,7 +74,7 @@ public class AppItemController {
         return ok(success(AppItemDto.from(appItem)).getJson());
     }
 
-    @GetMapping("/view/{spaceId}")
+    @GetMapping("/{spaceId}")
     @PreAuthorize("hasAuthority('VIEW_SPACE')")
     @ApiResponse(responseCode = "200", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = AppItemDto.class))

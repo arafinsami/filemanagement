@@ -3,7 +3,8 @@ package com.filemanagement.controller;
 
 import com.filemanagement.dto.AppUserDto;
 import com.filemanagement.entity.AppUser;
-import com.filemanagement.exception.ResourceNotFoundException;
+import com.filemanagement.handler.AppUserStoreModel;
+import com.filemanagement.mapper.AppUserModelMapper;
 import com.filemanagement.service.AppUserService;
 import com.filemanagement.validator.AppUserValidator;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,53 +43,43 @@ public class AppUserController {
 
     private final AppUserValidator appUserValidator;
 
-    @PostMapping("/save")
+    @PostMapping
     @PreAuthorize("hasAuthority('SAVE_USER')")
     @Operation(summary = "saving a user", description = "saving a user")
-    @ApiResponse(responseCode = "200", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = AppUserDto.class))
-    })
-    public ResponseEntity<JSONObject> save(@Valid @RequestBody AppUserDto dto,
-                                           BindingResult bindingResult) {
-        ValidationUtils.invokeValidator(appUserValidator, dto, bindingResult);
+    @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = AppUserDto.class))})
+    public ResponseEntity<JSONObject> save(@Valid @RequestBody AppUserDto request, BindingResult bindingResult) {
+        ValidationUtils.invokeValidator(appUserValidator, request, bindingResult);
         if (bindingResult.hasErrors()) {
             return badRequest().body(error(fieldError(bindingResult)).getJson());
         }
-        AppUser request = dto.to();
         AppUser appUser = appUserService.save(request);
-        return ok(success(AppUserDto.from(appUser)).getJson());
+        AppUserStoreModel auditAppUserStoreModel = AppUserModelMapper.from(appUser);
+        AppUserDto dto = AppUserModelMapper.from(auditAppUserStoreModel);
+        return ok(success(dto).getJson());
     }
 
-
-    @PutMapping("/update")
+    @PutMapping
     @PreAuthorize("hasAuthority('UPDATE_USER')")
     @Operation(summary = "updating a user", description = "updating a user")
-    public ResponseEntity<JSONObject> update(@Valid @RequestBody AppUserDto dto,
-                                             BindingResult bindingResult) {
-        ValidationUtils.invokeValidator(appUserValidator, dto, bindingResult);
+    public ResponseEntity<JSONObject> update(@Valid @RequestBody AppUserDto request, BindingResult bindingResult) {
+        ValidationUtils.invokeValidator(appUserValidator, request, bindingResult);
         if (bindingResult.hasErrors()) {
             return badRequest().body(error(fieldError(bindingResult)).getJson());
         }
-        AppUser request = appUserService.findById(dto.getId()).orElseThrow(ResourceNotFoundException::new);
-        dto.update(request);
         AppUser appUser = appUserService.update(request);
-        return ok(success(AppUserDto.from(appUser)).getJson());
+        AppUserStoreModel auditAppUserStoreModel = AppUserModelMapper.from(appUser);
+        AppUserDto dto = AppUserModelMapper.from(auditAppUserStoreModel);
+        return ok(success(dto).getJson());
     }
 
-    @GetMapping("/list")
+    @GetMapping
     @PreAuthorize("hasAuthority('READ_USER')")
     @Operation(summary = "show lists of users", description = "lists of users")
-    @ApiResponse(responseCode = "200", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = AppUserDto.class))
-    })
-    public ResponseEntity<JSONObject> getAppUsers(
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
-            @RequestParam(value = "size", defaultValue = "10") Integer size) {
+    @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = AppUserDto.class))})
+    public ResponseEntity<JSONObject> getAppUsers(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Map<String, Object> map = appUserService.getAppUsers(page, size);
         List<AppUser> appUsers = (List<AppUser>) map.get("lists");
-        List<AppUserDto> users = appUsers.stream()
-                .map(AppUserDto::from)
-                .collect(Collectors.toList());
+        List<AppUserStoreModel> users = appUsers.stream().map(AppUserModelMapper::from).collect(Collectors.toList());
         return ok(success(users).getJson());
     }
 }

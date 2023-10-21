@@ -2,7 +2,10 @@ package com.filemanagement.service;
 
 import com.filemanagement.dto.AppUserDto;
 import com.filemanagement.entity.AppUser;
+import com.filemanagement.exception.ResourceNotFoundException;
+import com.filemanagement.handler.AppUserStoreModel;
 import com.filemanagement.helper.AppUserHelper;
+import com.filemanagement.mapper.AppUserModelMapper;
 import com.filemanagement.model.RecordStatus;
 import com.filemanagement.repository.AppUserRepository;
 import com.filemanagement.utils.PaginationParameters;
@@ -38,31 +41,38 @@ public class AppUserService {
     private final EntityManager entityManager;
 
     @Transactional
-    public AppUser save(AppUser appUser) {
+    public AppUser save(AppUserDto dto) {
+        AppUserStoreModel appUserStoreModel = AppUserModelMapper.to(dto);
+        AppUser appUser = AppUserModelMapper.to(appUserStoreModel);
         appUserHelper.getSaveData(appUser);
-        AppUser saveAppuser = appUserRepository.save(appUser);
-        AppUserDto audit = AppUserDto.from(saveAppuser);
+        AppUser savedAppuser = appUserRepository.save(appUser);
+        AppUserStoreModel auditAppUserStoreModel = AppUserModelMapper.from(savedAppuser);
+        AppUserDto auditDto = AppUserModelMapper.from(auditAppUserStoreModel);
         actionLogService.publishActivity(
                 SAVE,
                 USER,
-                String.valueOf(audit.getId()),
-                objectToJson(audit)
+                String.valueOf(auditDto.getId()),
+                objectToJson(auditDto)
         );
-        return saveAppuser;
+        return savedAppuser;
     }
 
     @Transactional
-    public AppUser update(AppUser appUser) {
+    public AppUser update(AppUserDto dto) {
+        AppUser appUser = appUserRepository.findById(dto.getId()).orElseThrow(ResourceNotFoundException::new);
+        AppUserStoreModel appUserStoreModel = AppUserModelMapper.update(dto);
+        AppUserModelMapper.update(appUserStoreModel);
         appUserHelper.getUpdateData(appUser, RecordStatus.ACTIVE);
-        AppUser au = appUserRepository.save(appUser);
-        AppUserDto audit = AppUserDto.from(au);
+        AppUser savedAppuser = appUserRepository.save(appUser);
+        AppUserStoreModel auditAppUserStoreModel = AppUserModelMapper.from(savedAppuser);
+        AppUserDto auditDto = AppUserModelMapper.from(auditAppUserStoreModel);
         actionLogService.publishActivity(
                 UPDATE,
                 USER,
-                String.valueOf(audit.getId()),
-                objectToJson(audit)
+                String.valueOf(auditDto.getId()),
+                objectToJson(auditDto)
         );
-        return au;
+        return savedAppuser;
     }
 
     public Map<String, Object> getAppUsers(Integer page, Integer size) {

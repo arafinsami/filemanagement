@@ -31,7 +31,7 @@ public class AppFilesController {
 
     private final AppFilesService appFilesService;
 
-    @PostMapping("/{spaceId}/upload")
+    @PostMapping("/{spaceId}")
     @PreAuthorize("hasAuthority('CREATE_FILES')")
     @Operation(summary = "uploading a file", description = "uploading a file")
     @ApiResponse(responseCode = "200", content = {
