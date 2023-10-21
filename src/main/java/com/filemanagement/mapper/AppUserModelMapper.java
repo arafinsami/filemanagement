@@ -44,7 +44,7 @@ public class AppUserModelMapper {
         appUser.setUsername(appUserStoreModel.getUsername());
         appUser.setFirstName(appUserStoreModel.getFirstName());
         appUser.setLastName(appUserStoreModel.getLastName());
-        appUser.setGroups(getGroupsByUser(appUser));
+        appUser.setEmail(appUserStoreModel.getEmail());
     }
 
     public static AppUserStoreModel from(AppUser appUser) {
