@@ -2,10 +2,11 @@ package com.filemanagement.dto;
 
 import com.filemanagement.entity.Group;
 import com.filemanagement.entity.Permission;
-import com.filemanagement.entity.AppUser;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
