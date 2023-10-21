@@ -20,16 +20,6 @@ public class AppUserModelMapper {
                 .build();
     }
 
-    public static AppUser update(AppUserStoreModel model) {
-        return AppUser.builder()
-                .id(model.getId())
-                .username(model.getUsername())
-                .firstName(model.getFirstName())
-                .lastName(model.getLastName())
-                .email(model.getEmail())
-                .build();
-    }
-
     public static AppUserStoreModel to(AppUserDto dto) {
         return AppUserStoreModel.builder()
                 .username(dto.getUsername())
@@ -47,6 +37,14 @@ public class AppUserModelMapper {
                 .lastName(dto.getLastName())
                 .email(dto.getEmail())
                 .build();
+    }
+
+    public static void update(AppUserStoreModel appUserStoreModel, AppUser appUser) {
+        appUser.setId(appUserStoreModel.getId());
+        appUser.setUsername(appUserStoreModel.getUsername());
+        appUser.setFirstName(appUserStoreModel.getFirstName());
+        appUser.setLastName(appUserStoreModel.getLastName());
+        appUser.setGroups(getGroupsByUser(appUser));
     }
 
     public static AppUserStoreModel from(AppUser appUser) {

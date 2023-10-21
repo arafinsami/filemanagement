@@ -61,7 +61,7 @@ public class AppUserService {
     public AppUser update(AppUserDto dto) {
         AppUser appUser = appUserRepository.findById(dto.getId()).orElseThrow(ResourceNotFoundException::new);
         AppUserStoreModel appUserStoreModel = AppUserModelMapper.update(dto);
-        AppUserModelMapper.update(appUserStoreModel);
+        AppUserModelMapper.update(appUserStoreModel, appUser);
         appUserHelper.getUpdateData(appUser, RecordStatus.ACTIVE);
         AppUser savedAppuser = appUserRepository.save(appUser);
         AppUserStoreModel auditAppUserStoreModel = AppUserModelMapper.from(savedAppuser);
